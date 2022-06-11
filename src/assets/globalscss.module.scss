@@ -1,0 +1,38 @@
+$main-color: #f6b923;
+$btn1-color: #0DC078;
+$btn2-color: linear-gradient(126deg, #FFDF76 0%, #EFC58A 100%);
+$bg:#f2f2f2;
+
+$grey1:#e5eaf0;
+$grey2:#878d9a;
+
+
+$font-color:#23272a;
+
+.btn {
+  background: $main-color;
+  height: 55px;
+  color: #fff;
+  font-size: 17px;
+  border-radius: 28px;
+  font-family: Arial-BoldMT, Arial;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between
+}
+
+.all-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ellipsis {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
