@@ -1,47 +1,254 @@
 {
-  "name": "iphonechecker",
-  "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "AirJain <793505879@qq.com>",
-  "private": true,
-  "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
-    "build": "node build/build.js"
-  },
-  "dependencies": {
-    "amfe-flexible": "^2.2.1",
-    "postcss": "^8.4.14",
-    "postcss-pxtorem": "^5.0.0",
-    "axios": "^0.26.1",
-    "sass": "^1.50.0",
-    "sass-loader": "^12.6.0",
-    "stylus": "^0.57.0",
-    "stylus-loader": "^6.2.0",
-    "vant": "^2.12.47",
-    "vue": "^2.6.14",
-    "vue-router": "^3.5.1"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-plugin-router": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
-    "babel-plugin-import": "^1.13.5",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-vue": "^8.0.3",
-    "postcss-import": "^11.0.0",
-    "postcss-loader": "^2.1.6",
-    "postcss-pxtorem": "^6.0.0",
-    "postcss-url": "^7.2.1",
-    "prettier": "^2.4.1",
-    "vue-template-compiler": "^2.6.14",
-    "webpack": "^5.73.0",
-    "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.9.1"
-  }
+    "iPhoneModels": {
+        "i13mini": {
+            "pink": [
+                "MLDE3CH/A",
+                "MLDK3CH/A",
+                "MLDQ3CH/A"
+            ],
+            "blue": [
+                "MLDG3CH/A",
+                "MLDM3CH/A",
+                "MLDT3CH/A"
+            ],
+            "midnight": [
+                "MLDC3CH/A",
+                "MLDH3CH/A",
+                "MLDN3CH/A"
+            ],
+            "starlight": [
+                "MLDD3CH/A",
+                "MLDJ3CH/A",
+                "MLDP3CH/A"
+            ],
+            "product_red": [
+                "MLDF3CH/A",
+                "MLDL3CH/A",
+                "MLDR3CH/A"
+            ]
+        },
+        "i13": {
+            "pink": [
+                "MLDW3CH/A",
+                "MLE23CH/A",
+                "MLE93CH/A"
+            ],
+            "blue": [
+                "MLDY3CH/A",
+                "MLE43CH/A",
+                "MLEC3CH/A"
+            ],
+            "midnight": [
+                "MLDU3CH/A",
+                "MLE03CH/A",
+                "MLE63CH/A"
+            ],
+            "starlight": [
+                "MLDV3CH/A",
+                "MLE13CH/A",
+                "MLE73CH/A"
+            ],
+            "product_red": [
+                "MLDX3CH/A",
+                "MLE33CH/A",
+                "MLEA3CH/A"
+            ]
+        },
+        "i13Pro": {
+            "sierrablue": [
+                "MLT83CH/A",
+                "MLTE3CH/A",
+                "MLTJ3CH/A",
+                "MLTN3CH/A"
+            ],
+            "silver": [
+                "MLT63CH/A",
+                "MLTC3CH/A",
+                "MLTG3CH/A",
+                "MLTL3CH/A"
+            ],
+            "gold": [
+                "MLT73CH/A",
+                "MLTD3CH/A",
+                "MLTH3CH/A",
+                "MLTM3CH/A"
+            ],
+            "graphite": [
+                "MLT53CH/A",
+                "MLT93CH/A",
+                "MLTF3CH/A",
+                "MLTK3CH/A"
+            ]
+        },
+        "i13ProMax": {
+            "sierrablue": [
+                "MLH73CH/A",
+                "MLHC3CH/A",
+                "MLHG3CH/A",
+                "MLHL3CH/A"
+            ],
+            "silver": [
+                "MLH53CH/A",
+                "MLH93CH/A",
+                "MLHE3CH/A",
+                "MLHJ3CH/A"
+            ],
+            "gold": [
+                "MLH63CH/A",
+                "MLHA3CH/A",
+                "MLHF3CH/A",
+                "MLHK3CH/A"
+            ],
+            "graphite": [
+                "MLH43CH/A",
+                "MLH83CH/A",
+                "MLHD3CH/A",
+                "MLHH3CH/A"
+            ]
+        }
+    },
+    "iPhoneColors": {
+        "pink": "粉色",
+        "blue": "蓝色",
+        "midnight": "午夜色",
+        "starlight": "星光色",
+        "product_red": "红色",
+        "sierrablue": "远峰蓝色",
+        "silver": "银色",
+        "gold": "金色",
+        "graphite": "石墨色"
+    },
+    "urls": {
+        "i13mini": "&parts.0=MLDE3CH/A&parts.1=MLDK3CH/A&parts.2=MLDQ3CH/A&parts.3=MLDG3CH/A&parts.4=MLDM3CH/A&parts.5=MLDT3CH/A&parts.6=MLDC3CH/A&parts.7=MLDH3CH/A&parts.8=MLDN3CH/A&parts.9=MLDD3CH/A&parts.10=MLDJ3CH/A&parts.11=MLDP3CH/A&parts.12=MLDF3CH/A&parts.13=MLDL3CH/A&parts.14=MLDR3CH/A",
+        "i13": "&parts.0=MLDW3CH/A&parts.1=MLE23CH/A&parts.2=MLE93CH/A&parts.3=MLDY3CH/A&parts.4=MLE43CH/A&parts.5=MLEC3CH/A&parts.6=MLDU3CH/A&parts.7=MLE03CH/A&parts.8=MLE63CH/A&parts.9=MLDV3CH/A&parts.10=MLE13CH/A&parts.11=MLE73CH/A&parts.12=MLDX3CH/A&parts.13=MLE33CH/A&parts.14=MLEA3CH/A",
+        "i13Pro": "&parts.0=MLT83CH/A&parts.1=MLTE3CH/A&parts.2=MLTJ3CH/A&parts.3=MLTN3CH/A&parts.4=MLT63CH/A&parts.5=MLTC3CH/A&parts.6=MLTG3CH/A&parts.7=MLTL3CH/A&parts.8=MLT73CH/A&parts.9=MLTD3CH/A&parts.10=MLTH3CH/A&parts.11=MLTM3CH/A&parts.12=MLT53CH/A&parts.13=MLT93CH/A&parts.14=MLTF3CH/A&parts.15=MLTK3CH/A",
+        "i13ProMax": "&parts.0=MLH73CH/A&parts.1=MLHC3CH/A&parts.2=MLHG3CH/A&parts.3=MLHL3CH/A&parts.4=MLH53CH/A&parts.5=MLH93CH/A&parts.6=MLHE3CH/A&parts.7=MLHJ3CH/A&parts.8=MLH63CH/A&parts.9=MLHA3CH/A&parts.10=MLHF3CH/A&parts.11=MLHK3CH/A&parts.12=MLH43CH/A&parts.13=MLH83CH/A&parts.14=MLHD3CH/A&parts.15=MLHH3CH/A"
+    },
+    "default": {
+        "iPhoneModels": {
+            "i13mini": {
+                "pink": [
+                    "MLDE3CH/A",
+                    "MLDK3CH/A",
+                    "MLDQ3CH/A"
+                ],
+                "blue": [
+                    "MLDG3CH/A",
+                    "MLDM3CH/A",
+                    "MLDT3CH/A"
+                ],
+                "midnight": [
+                    "MLDC3CH/A",
+                    "MLDH3CH/A",
+                    "MLDN3CH/A"
+                ],
+                "starlight": [
+                    "MLDD3CH/A",
+                    "MLDJ3CH/A",
+                    "MLDP3CH/A"
+                ],
+                "product_red": [
+                    "MLDF3CH/A",
+                    "MLDL3CH/A",
+                    "MLDR3CH/A"
+                ]
+            },
+            "i13": {
+                "pink": [
+                    "MLDW3CH/A",
+                    "MLE23CH/A",
+                    "MLE93CH/A"
+                ],
+                "blue": [
+                    "MLDY3CH/A",
+                    "MLE43CH/A",
+                    "MLEC3CH/A"
+                ],
+                "midnight": [
+                    "MLDU3CH/A",
+                    "MLE03CH/A",
+                    "MLE63CH/A"
+                ],
+                "starlight": [
+                    "MLDV3CH/A",
+                    "MLE13CH/A",
+                    "MLE73CH/A"
+                ],
+                "product_red": [
+                    "MLDX3CH/A",
+                    "MLE33CH/A",
+                    "MLEA3CH/A"
+                ]
+            },
+            "i13Pro": {
+                "sierrablue": [
+                    "MLT83CH/A",
+                    "MLTE3CH/A",
+                    "MLTJ3CH/A",
+                    "MLTN3CH/A"
+                ],
+                "silver": [
+                    "MLT63CH/A",
+                    "MLTC3CH/A",
+                    "MLTG3CH/A",
+                    "MLTL3CH/A"
+                ],
+                "gold": [
+                    "MLT73CH/A",
+                    "MLTD3CH/A",
+                    "MLTH3CH/A",
+                    "MLTM3CH/A"
+                ],
+                "graphite": [
+                    "MLT53CH/A",
+                    "MLT93CH/A",
+                    "MLTF3CH/A",
+                    "MLTK3CH/A"
+                ]
+            },
+            "i13ProMax": {
+                "sierrablue": [
+                    "MLH73CH/A",
+                    "MLHC3CH/A",
+                    "MLHG3CH/A",
+                    "MLHL3CH/A"
+                ],
+                "silver": [
+                    "MLH53CH/A",
+                    "MLH93CH/A",
+                    "MLHE3CH/A",
+                    "MLHJ3CH/A"
+                ],
+                "gold": [
+                    "MLH63CH/A",
+                    "MLHA3CH/A",
+                    "MLHF3CH/A",
+                    "MLHK3CH/A"
+                ],
+                "graphite": [
+                    "MLH43CH/A",
+                    "MLH83CH/A",
+                    "MLHD3CH/A",
+                    "MLHH3CH/A"
+                ]
+            }
+        },
+        "iPhoneColors": {
+            "pink": "粉色",
+            "blue": "蓝色",
+            "midnight": "午夜色",
+            "starlight": "星光色",
+            "product_red": "红色",
+            "sierrablue": "远峰蓝色",
+            "silver": "银色",
+            "gold": "金色",
+            "graphite": "石墨色"
+        },
+        "urls": {
+            "i13mini": "&parts.0=MLDE3CH/A&parts.1=MLDK3CH/A&parts.2=MLDQ3CH/A&parts.3=MLDG3CH/A&parts.4=MLDM3CH/A&parts.5=MLDT3CH/A&parts.6=MLDC3CH/A&parts.7=MLDH3CH/A&parts.8=MLDN3CH/A&parts.9=MLDD3CH/A&parts.10=MLDJ3CH/A&parts.11=MLDP3CH/A&parts.12=MLDF3CH/A&parts.13=MLDL3CH/A&parts.14=MLDR3CH/A",
+            "i13": "&parts.0=MLDW3CH/A&parts.1=MLE23CH/A&parts.2=MLE93CH/A&parts.3=MLDY3CH/A&parts.4=MLE43CH/A&parts.5=MLEC3CH/A&parts.6=MLDU3CH/A&parts.7=MLE03CH/A&parts.8=MLE63CH/A&parts.9=MLDV3CH/A&parts.10=MLE13CH/A&parts.11=MLE73CH/A&parts.12=MLDX3CH/A&parts.13=MLE33CH/A&parts.14=MLEA3CH/A",
+            "i13Pro": "&parts.0=MLT83CH/A&parts.1=MLTE3CH/A&parts.2=MLTJ3CH/A&parts.3=MLTN3CH/A&parts.4=MLT63CH/A&parts.5=MLTC3CH/A&parts.6=MLTG3CH/A&parts.7=MLTL3CH/A&parts.8=MLT73CH/A&parts.9=MLTD3CH/A&parts.10=MLTH3CH/A&parts.11=MLTM3CH/A&parts.12=MLT53CH/A&parts.13=MLT93CH/A&parts.14=MLTF3CH/A&parts.15=MLTK3CH/A",
+            "i13ProMax": "&parts.0=MLH73CH/A&parts.1=MLHC3CH/A&parts.2=MLHG3CH/A&parts.3=MLHL3CH/A&parts.4=MLH53CH/A&parts.5=MLH93CH/A&parts.6=MLHE3CH/A&parts.7=MLHJ3CH/A&parts.8=MLH63CH/A&parts.9=MLHA3CH/A&parts.10=MLHF3CH/A&parts.11=MLHK3CH/A&parts.12=MLH43CH/A&parts.13=MLH83CH/A&parts.14=MLHD3CH/A&parts.15=MLHH3CH/A"
+        }
+    }
 }
