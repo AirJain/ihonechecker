@@ -19,7 +19,7 @@
                 v-model="item.checked"
                 inactive-color="#f2f2f2"
                 size="20px"
-                disabled 
+                disabled
               />
             </div>
           </div>
@@ -31,11 +31,16 @@
           <div class="bottom">
             <div
               class="peizhi"
-              v-for="(item2, index) in item.products"
-              :key="index"
+              v-for="(item2, key, index2) in item.newProducts"
+              :key="index2"
             >
-              <span class="type"> {{ item2.colorText }}: </span>
-              <span class="memory">{{ item2.memory }}</span>
+              <span class="type"> {{ item2[0].colorText }}: </span>
+              <span
+                class="memory"
+                v-for="(item3, index3) in item2"
+                :key="index3"
+                >{{ item3.memory }}</span
+              >
             </div>
           </div>
           <div class="edit"><van-icon name="edit" size="15" /> 编辑</div>
@@ -99,18 +104,22 @@ export default {
         });
     },
     setList(list) {
+      let obj = {};
       for (var i = 0; i < list.length; i++) {
         let item = list[i];
         let checked = false;
         for (var j = 0; j < item.products.length; j++) {
           let item1 = item.products[j];
-          if (item1.stockStatus == 1) {
-            checked = true;
-          } else if (item1.stockStatus == 2) {
-            checked = false;
-          }
+          if (item.productCode)
+            if (item1.stockStatus == 1) {
+              checked = true;
+            } else if (item1.stockStatus == 2) {
+              checked = false;
+            }
         }
-        list[i].checked = true;
+        let dd = this.$helper.setReduce(item.products);
+        list[i].newProducts = dd;
+        list[i].checked = checked;
       }
 
       this.list = list;

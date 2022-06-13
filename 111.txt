@@ -56,3 +56,20 @@
         "localText": "中国"
     }
 ]
+
+
+  <div class="bottom">
+            <div
+              class="peizhi"
+              v-for="(item2, key, index2) in item.newProducts"
+              :key="index2"
+            >
+              <span class="type"> {{ key }}: </span>
+              <span
+                class="memory"
+                v-for="(item3, index3) in item2"
+                :key="index3"
+                >{{ item3.memory }}</span
+              >
+            </div>
+          </div>
