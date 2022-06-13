@@ -16,7 +16,7 @@ const request = axios.create({
 
 // 异常拦截处理器
 const errorHandler = (error) => {
-  //Toast.clear();
+  Toast.clear(); 
   if (error.response) { 
     
   }
