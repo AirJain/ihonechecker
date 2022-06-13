@@ -295,7 +295,7 @@ export default {
         if (i == 3) {
           model = {
             originModel: models[i],
-            showModel: "1TB",
+            showModel: "1T",
             key: "check" + i,
           };
         }
