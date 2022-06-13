@@ -11,43 +11,31 @@
         <div class="list-item">
           <div class="top">
             <div>
-              {{item.products[0].localText}}
+              {{ $helper.convertNation(item.local) }}
               <span class="time"> 2022/6/6 13:53</span>
             </div>
             <div>
               <van-switch
-                v-model="checked"
+                v-model="item.checked"
                 inactive-color="#f2f2f2"
                 size="20px"
+                disabled 
               />
             </div>
           </div>
           <div class="mid">
             <div>邮编:{{ item.zipCode }}</div>
-            <div>型号:{{item.products[0].productText}}</div>
-            <div>运营商:</div>
+            <div>型号:{{ $helper.convertPhone(item.productName) }}</div>
+            <div>运营商:暂无</div>
           </div>
           <div class="bottom">
-            <div class="peizhi">
-              <span class="type"> Sierra Blue: </span>
-              <span class="memory">128GB</span>
-              <span class="memory">128GB</span>
-              <span class="memory">128GB</span>
-              <span class="memory">128GB</span>
-            </div>
-            <div class="peizhi">
-              <span class="type"> Sierra Blue: </span>
-              <span class="memory">128GB</span>
-              <span class="memory">128GB</span>
-              <span class="memory">128GB</span>
-              <span class="memory">128GB</span>
-            </div>
-            <div class="peizhi">
-              <span class="type"> Sierra Blue: </span>
-              <span class="memory">128GB</span>
-              <span class="memory">128GB</span>
-              <span class="memory">128GB</span>
-              <span class="memory">128GB</span>
+            <div
+              class="peizhi"
+              v-for="(item2, index) in item.products"
+              :key="index"
+            >
+              <span class="type"> {{ item2.colorText }}: </span>
+              <span class="memory">{{ item2.memory }}</span>
             </div>
           </div>
           <div class="edit"><van-icon name="edit" size="15" /> 编辑</div>
@@ -86,6 +74,10 @@ export default {
     this.getList();
   },
   methods: {
+    onLoad() {
+      this.page = this.page + 1;
+      this.getList();
+    },
     getList() {
       this.$http
         .get("http://118.31.113.136:8081/stock/rest/sysMonitor/pageList", {
@@ -97,7 +89,7 @@ export default {
         })
         .then((res) => {
           if (res.status == 200) {
-            this.list = res.data.data;
+            this.setList(res.data.data);
             this.isListEnd(res.data.total);
           }
         })
@@ -105,6 +97,23 @@ export default {
           this.loading = false;
           this.isLoading = false;
         });
+    },
+    setList(list) {
+      for (var i = 0; i < list.length; i++) {
+        let item = list[i];
+        let checked = false;
+        for (var j = 0; j < item.products.length; j++) {
+          let item1 = item.products[j];
+          if (item1.stockStatus == 1) {
+            checked = true;
+          } else if (item1.stockStatus == 2) {
+            checked = false;
+          }
+        }
+        list[i].checked = true;
+      }
+
+      this.list = list;
     },
     isListEnd(total) {
       if (total < this.size * this.page) {

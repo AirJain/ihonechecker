@@ -1,5 +1,11 @@
-
-
+/*
+ * @Author: yxx 793505879@qq.com
+ * @Date: 2022-06-13 20:25:24
+ * @LastEditors: yxx 793505879@qq.com
+ * @LastEditTime: 2022-06-13 20:30:02
+ * @FilePath: \ihonechecker\src\utils\helper.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import router from '@/router'
 export default {
   Jump(url) {
@@ -64,6 +70,24 @@ export default {
         break;
     }
 
+    return rtData;
+  },
+  convertPhone(productName) {
+    let rtData = null;
+    switch (productName) {
+      case "i13":
+        rtData = "iPhone 13"
+        break;
+      case "i13Pro":
+        rtData = "iPhone 13 Pro"
+        break;
+      case "i13ProMax":
+        rtData = "iPhone 13 Pro Max"
+        break;
+      case "i13mini":
+        rtData = "i13mini"
+        break;
+    }
     return rtData;
   }
 }
