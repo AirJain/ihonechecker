@@ -2,7 +2,7 @@
   <div class="main">
     <van-tabs v-model="active" sticky>
       <van-tab title="监控列表">
-        <MonitorList :list="list" />
+        <MonitorList/>
       </van-tab>
       <van-tab title="添加监控">
         <AddMonitor />
@@ -23,14 +23,22 @@ export default {
   data() {
     return {
       active: 0,
-      list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     };
   },
   created() {},
-  mounted() {},
+  mounted() {
+    const { type } = this.$route.query;
+    if (type) {
+      this.type = type;
+      if (this.type == "list") {
+        this.active = 0;
+      } else {
+        this.active = 1;
+      }
+    }
+  },
   methods: {},
 };
 </script>
 <style lang="scss" scoped>
-
 </style>

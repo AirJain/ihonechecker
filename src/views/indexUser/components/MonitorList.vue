@@ -43,7 +43,9 @@
               >
             </div>
           </div>
-          <div class="edit"><van-icon name="edit" size="15" /> 编辑</div>
+          <div class="edit" @click="edit(item.id)">
+            <van-icon name="edit" size="15" /> 编辑
+          </div>
         </div>
       </div>
     </van-list>
@@ -79,6 +81,9 @@ export default {
     this.getList();
   },
   methods: {
+    edit(id) {
+      this.$router.push("/userIndex?type=" + id);
+    },
     onLoad() {
       this.page = this.page + 1;
       this.getList();

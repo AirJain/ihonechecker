@@ -63,20 +63,7 @@
               >
             </van-checkbox-group>
           </template>
-        </van-field>
-        <!-- <div class="peizhi" v-for="(item, index) in iphoneList" :key="index">
-          <div class="title">{{ item.color }}:</div>
-          <van-checkbox-group v-model="item.check">
-            <van-checkbox
-              shape="square"
-              :name="item2.originModel"
-              icon-size="15px"
-              v-for="(item2, index2) in item.models"
-              :key="index2"
-              >{{ item2.showModel }}</van-checkbox
-            >
-          </van-checkbox-group>
-        </div> -->
+        </van-field> 
         <van-field name="status" label="立即开启监控">
           <template #input>
             <van-switch v-model="checked" size="24" />

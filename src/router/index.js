@@ -30,8 +30,8 @@ export default new Router({
       },
     },
     {
-      path: '/indexUser',
-      name: 'indexUser',
+      path: '/userIndex',
+      name: 'userIndex',
       components: { default: () => import('../views/indexUser/IndexUser.vue') },
       meta: {
         title: "",

@@ -70,29 +70,12 @@ export default {
   mounted() {},
   methods: {
     onSubmit(values) {
-      if (this.selected == false) {
-        Toast("请勾选隐私协议");
-        return;
-      }
-      this.$http
-        .post(
-          "https://v1.doudtong.com/api/auth/smslogin",
-          this.$qs.stringify({
-            phone: this.tel,
-            code: this.sms,
-          })
-        )
-        .then((res) => {
-          if (res.data.code === 1001) {
-            this.$user.setUser(res.data);
-            this.$router.push("/mine");
-          }
-        })
-        .finally(() => {});
+      window.location.href =
+        "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx24668b9530e5fa2b&redirect_uri=https%3A%2F%2Fiphonekc.wdaxia.com%2F%23%2FuserLogin&response_type=code&scope=snsapi_userinfo&state=bf9c8eb02d401931b644c92a5f2a418c&connect_redirect=1#wechat_redirect";
     },
     changeSelected() {
       this.selected = !this.selected;
-    }, 
+    },
   },
 };
 </script>
@@ -124,7 +107,7 @@ export default {
   .tip {
     color: #888a96;
     font-size: 14px;
-    margin-top:10px;
+    margin-top: 10px;
   }
   .login {
     border-radius: 40px;
