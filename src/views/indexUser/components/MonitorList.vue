@@ -49,6 +49,7 @@
         </div>
       </div>
     </van-list>
+    <EditMonitor :visible="visible" @close="closeEdit" :monitorId="monitorId" />
   </div>
 </template>
 <script>
@@ -57,6 +58,7 @@ import { Switch } from "vant";
 import { List } from "vant";
 import { Toast } from "vant";
 import { Dialog } from "vant";
+import EditMonitor from "./EditMonitor";
 
 Vue.use(Toast);
 Vue.use(List);
@@ -65,7 +67,7 @@ export default {
   props: {
     height: {},
   },
-  components: {},
+  components: { EditMonitor },
   data() {
     return {
       checked: false,
@@ -74,6 +76,8 @@ export default {
       finished: false,
       loading: false,
       list: [],
+      visible: false,
+      monitorId: 0,
     };
   },
   created() {},
@@ -81,8 +85,12 @@ export default {
     this.getList();
   },
   methods: {
+    closeEdit() {
+      this.visible = false;
+    },
     edit(id) {
-      this.$router.push("/userIndex?type=" + id);
+      this.monitorId = id; 
+      this.visible = true;
     },
     onLoad() {
       this.page = this.page + 1;

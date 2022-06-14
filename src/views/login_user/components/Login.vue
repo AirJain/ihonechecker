@@ -64,14 +64,49 @@ export default {
       password: "",
       selected: false,
       time: "验证码",
+      code: null,
     };
   },
-  created() {},
+  created() {
+    const url = decodeURI(decodeURI(window.location.href));
+    let d = url.split("?");
+    if (d[1]) {
+      var str = url.split("?")[1];
+      var keys = str.split("&");
+      var obj = {};
+      keys.forEach((item, idx, data) => {
+        var arr = item.split("=");
+        obj[arr[0]] = arr[1];
+      });
+
+      const { inviter, code } = obj;
+      if (inviter && inviter != undefined) {
+        this.inviter = inviter.replaceAll("#/", "");
+      }
+
+      if (code != null && code != undefined) {
+        this.code = code.replaceAll("#/", "");
+        this.wechatBack();
+      }
+    }
+  },
   mounted() {},
   methods: {
     onSubmit(values) {
       window.location.href =
-        "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx24668b9530e5fa2b&redirect_uri=https%3A%2F%2Fiphonekc.wdaxia.com%2F%23%2FuserLogin&response_type=code&scope=snsapi_userinfo&state=bf9c8eb02d401931b644c92a5f2a418c&connect_redirect=1#wechat_redirect";
+        "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx24668b9530e5fa2b&redirect_uri=https%3A%2F%2Fiphonekc.doudtong.com%2F%23%2FuserLogin&response_type=code&scope=snsapi_userinfo&state=bf9c8eb02d401931b644c92a5f2a418c&connect_redirect=1#wechat_redirect";
+    },
+    wechatBack() { 
+      this.$http
+        .get("https://iphonekc.doudtong.com/stock/rest/sysUser/accessToken", {
+          params: {
+            code: this.code,
+          },
+        })
+        .then((res) => { 
+          this.$user.setOpenId(res.data.openid);
+          this.$router.push("/userIndex");
+        });
     },
     changeSelected() {
       this.selected = !this.selected;

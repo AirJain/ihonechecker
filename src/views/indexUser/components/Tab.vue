@@ -23,19 +23,12 @@ export default {
   data() {
     return {
       active: 0,
+      openId:""
     };
   },
   created() {},
   mounted() {
-    const { type } = this.$route.query;
-    if (type) {
-      this.type = type;
-      if (this.type == "list") {
-        this.active = 0;
-      } else {
-        this.active = 1;
-      }
-    }
+   
   },
   methods: {},
 };
