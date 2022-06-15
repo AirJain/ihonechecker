@@ -43,8 +43,13 @@
               >
             </div>
           </div>
-          <div class="edit" @click="edit(item.id)">
-            <van-icon name="edit" size="15" /> 编辑
+          <div class="caozuo">
+            <div class="delete" @click="doDelete(item.id)">
+              <van-icon name="delete" size="15" /> 删除
+            </div>
+            <div class="edit" @click="edit(item.id)">
+              <van-icon name="edit" size="15" /> 编辑
+            </div>
           </div>
         </div>
       </div>
@@ -109,6 +114,29 @@ export default {
     edit(id) {
       this.monitorId = id;
       this.visible = true;
+    },
+    doDelete(id) {
+      Dialog.confirm({
+        message: "您确定删除该监控吗？",
+      })
+        .then(() => {
+          this.$http
+            .get("https://iphonekc.doudtong.com/stock/rest/sysMonitor/delete", {
+              params: {
+                id: id,
+              },
+            })
+            .then((res) => {
+              if (res.status == 200) {
+                Toast(res.data.msg);
+                this.getList();
+              }
+            })
+            .finally(() => {});
+        })
+        .catch(() => {
+          // on cancel
+        });
     },
     onLoad() {
       this.page = this.page + 1;
@@ -210,12 +238,24 @@ export default {
           }
         }
       }
-      .edit {
-        color: #888a96;
-        right: 2px;
-        bottom: 2px;
-        margin-top: 10px;
-        text-align: right;
+      .caozuo {
+        display: flex;
+        flex-direction: row-reverse;
+        .edit {
+          color: #888a96;
+          right: 2px;
+          bottom: 2px;
+          margin-top: 10px;
+          text-align: right;
+          margin-right: 10px;
+        }
+        .delete {
+          color: #888a96;
+          right: 15px;
+          bottom: 2px;
+          margin-top: 10px;
+          text-align: right;
+        }
       }
     }
   }

@@ -198,7 +198,10 @@ export default {
       this.phoneValue.text = this.$helper.convertPhone(
         this.editData.productName
       );
-
+      this.operatorValue.value = this.editData.version;
+      this.operatorValue.text = this.$helper.convertCarriers(
+        this.editData.version
+      );
       //设置picker默认选中型号
       for (var i = 0; i < this.phoneColumns.length; i++) {
         let item = this.phoneColumns[i];
@@ -317,7 +320,7 @@ export default {
         if (data.props.pageProps) {
           this.phoneModes = JSON.parse(data.props.pageProps.models);
           for (var key in this.phoneModes.iPhoneModels) {
-            let nKey = this.operatorValue.value; 
+            let nKey = this.operatorValue.value;
             nKey = nKey + this.phoneValue.value;
             if (nKey == key) {
               tempList = this.phoneModes.iPhoneModels[key];

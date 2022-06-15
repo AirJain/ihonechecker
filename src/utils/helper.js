@@ -90,17 +90,39 @@ export default {
     }
     return rtData;
   },
+  convertCarriers(code) {
+    let rtData = null;
+    switch (code) {
+      case "att":
+        rtData = "AT&T"
+        break;
+      case "sprint":
+        rtData = "Sprint"
+        break;
+      case "tmobile":
+        rtData = "Tmobile"
+        break;
+      case "unlocked":
+        rtData = "Unlocked"
+        break;
+      case "verizon":
+        rtData = "Verizon"
+        break;
+    }
+    return rtData;
+
+  },
   setReduce(data) {
     let resMap = {};
     for (var i = 0; i < data.length; i++) {
-      let item = data[i]; 
+      let item = data[i];
       if (!resMap[item.color]) {
         resMap[item.color] = [item];
       } else {
-        resMap[item.color].push(item); 
+        resMap[item.color].push(item);
       }
     }
     return resMap;
   },
-  
+
 }

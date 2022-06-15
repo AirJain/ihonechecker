@@ -10,7 +10,8 @@
   <div class="content">
     <van-icon
       :name="require('../assets/img/iPhone.png')"
-      class="img"
+      class="img" 
+      size="50"
     ></van-icon> 
   </div>
 </template> 
