@@ -36,7 +36,7 @@
           v-model="emailCode"
           name="zipCode"
           label="输入邮编"
-          placeholder="请输入邮编"
+          placeholder="确认邮编后选择型号"
           :rules="[{ required: true, message: '请填写邮编' }]"
         >
           <template #button>
@@ -63,7 +63,7 @@
               >
             </van-checkbox-group>
           </template>
-        </van-field> 
+        </van-field>
         <van-field name="status" label="立即开启监控">
           <template #input>
             <van-switch v-model="checked" size="24" />
@@ -108,7 +108,7 @@
 </template>
 <script>
 import Vue from "vue";
-import { Switch } from "vant";
+import { Switch, Toast } from "vant";
 import { Picker } from "vant";
 import { Popup } from "vant";
 import { Checkbox, CheckboxGroup } from "vant";
@@ -118,12 +118,13 @@ Vue.use(Popup);
 Vue.use(Picker);
 Vue.use(Switch);
 export default {
-  props: {},
+  props: { userInfo: {} },
+  watch: {},
   components: {},
   data() {
     return {
       checked: false,
-      emailCode: "430000",
+      emailCode: "",
       defaultNation: 0,
       nationValue: { text: "", value: "" },
       phoneValue: { text: "", value: "" },
@@ -194,7 +195,7 @@ export default {
     },
     onGetConfig() {
       this.$http
-        .get("http://118.31.113.136:8081/stock/rest/stock/queryConfig", {})
+        .get("https://iphonekc.doudtong.com/stock/rest/stock/queryConfig", {})
         .then((res) => {
           if (res.status == 200) {
             this.onSetConfig(res.data.data);
@@ -219,7 +220,7 @@ export default {
     },
     onGetShopList() {
       this.$http
-        .get("http://118.31.113.136:8081/stock/rest/stock/queryStores", {
+        .get("https://iphonekc.doudtong.com/stock/rest/stock/queryStores", {
           params: {
             local: this.nationValue.value,
             productName: this.phoneValue.value,
@@ -297,15 +298,15 @@ export default {
       } else {
         status = 2;
       }
-      let productName = this.phoneValue.value; 
+      let productName = this.phoneValue.value;
       let local = this.nationValue.value;
-      let products = this.getProductCode(values, status); 
+      let products = this.getProductCode(values, status);
       this.$http
         .post(
-          "http://118.31.113.136:8081/stock/rest/sysMonitor/insert",
+          "https://iphonekc.doudtong.com/stock/rest/sysMonitor/insert",
           this.$qs.stringify({
-            userId: 1,
-            openId: 1,
+            userId: this.userInfo.id,
+            openId: this.userInfo.openId,
             local: local,
             zipCode: values.zipCode,
             productName: productName,
@@ -314,7 +315,9 @@ export default {
             products: JSON.stringify(products),
           })
         )
-        .then((res) => {})
+        .then((res) => {
+          Toast(res.data.msg);
+        })
         .finally(() => {});
     },
     getProductCode(data, status) {

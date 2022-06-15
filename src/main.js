@@ -35,15 +35,25 @@ Vue.use(List);
 Vue.use(VanImage);
 Vue.use(Divider);
 Vue.use(Skeleton);
-import { VueAxios } from './utils/request'    
+import { VueAxios } from './utils/request'
 Vue.use(VueAxios)
 Vue.config.productionTip = false
 Vue.prototype.$qs = qs;
-Vue.prototype.$user = user; 
+Vue.prototype.$user = user;
 
 Vue.prototype.$helper = helper;
 Vue.prototype.$Jump = helper.Jump;
 /* eslint-disable no-new */
+
+// 根据路由设置标题// 路由发生改变修改页面的title
+router.beforeEach((to, from, next) => { 
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+  window.scrollTo(0, 0);
+  next();
+});
+
 new Vue({
   el: '#app',
   router,

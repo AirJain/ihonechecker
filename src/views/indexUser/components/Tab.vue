@@ -1,11 +1,11 @@
 <template>
   <div class="main">
-    <van-tabs v-model="active" sticky>
+    <van-tabs v-model="active" sticky @change="changeTab">
       <van-tab title="监控列表">
-        <MonitorList/>
+        <MonitorList :userInfo="userInfo" :active="listActive" />
       </van-tab>
       <van-tab title="添加监控">
-        <AddMonitor />
+        <AddMonitor :userInfo="userInfo" />
       </van-tab>
     </van-tabs>
   </div>
@@ -23,14 +23,24 @@ export default {
   data() {
     return {
       active: 0,
-      openId:""
+      openId: "",
+      userInfo: null,
+      listActive: true, 
     };
   },
   created() {},
   mounted() {
-   
+    this.userInfo = this.$user.getUser(2);
   },
-  methods: {},
+  methods: {
+    changeTab(active) {
+      if (active == 0) {
+        this.listActive = true; 
+      } else if (active == 1) {
+        this.listActive = false; 
+      }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

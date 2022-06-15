@@ -1,15 +1,4 @@
-export default {
-    setOpenId(openid) {
-        localStorage.setItem("iphone_open_id", openid);
-    },
-    getOpenId() {
-        let openid =
-            localStorage.getItem("iphone_open_id");
-        if (openid) {
-            let result = openid;
-            return result;
-        } 
-    },
+export default { 
     //type 1 管理员  2 普通用户 
     getUser(type) {
         if (type == 1) {

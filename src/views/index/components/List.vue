@@ -13,7 +13,8 @@
             width="50"
             height="50"
             fit="cover"
-            src="https://img01.yzcdn.cn/vant/cat.jpeg"
+            round
+            :src="item.userPic"
           />
         </div>
         <div class="list-item all-center">{{ item.name }}</div>
@@ -69,7 +70,7 @@ export default {
     },
     getList() {
       this.$http
-        .get("http://118.31.113.136:8081/stock/rest/sysUser/pageList", {
+        .get("https://iphonekc.doudtong.com/stock/rest/sysUser/pageList", {
           params: {
             searchText: this.keyword,
             pageNo: this.page,
@@ -112,7 +113,7 @@ export default {
         item.author = 0;
       }
       this.$http
-        .get("http://118.31.113.136:8081/stock/rest/sysUser/changeAuthor", {
+        .get("https://iphonekc.doudtong.com/stock/rest/sysUser/changeAuthor", {
           params: {
             userId: item.id,
             author: item.author,
@@ -148,12 +149,12 @@ export default {
 .content {
   height: 84vh;
   overflow-y: auto;
-  font-size: 24px;
   .list {
     display: flex;
     background: #ffffff;
     padding: 5px 0;
     .list-item {
+      font-size: 16px;
       width: calc(100% / 3);
     }
   }

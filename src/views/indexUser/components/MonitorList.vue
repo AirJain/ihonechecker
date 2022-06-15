@@ -49,7 +49,13 @@
         </div>
       </div>
     </van-list>
-    <EditMonitor :visible="visible" @close="closeEdit" :monitorId="monitorId" />
+    <EditMonitor
+      :visible="visible"
+      @close="closeEdit"
+      @refresh="refresh"
+      :monitorId="monitorId"
+      :userInfo="userInfo"
+    />
   </div>
 </template>
 <script>
@@ -66,6 +72,15 @@ Vue.use(Switch);
 export default {
   props: {
     height: {},
+    userInfo: {},
+    active: {},
+  },
+  watch: {
+    active(val) {
+      if (val == true) { 
+        this.getList();
+      }
+    },
   },
   components: { EditMonitor },
   data() {
@@ -85,11 +100,14 @@ export default {
     this.getList();
   },
   methods: {
+    refresh() {
+      this.getList();
+    },
     closeEdit() {
       this.visible = false;
     },
     edit(id) {
-      this.monitorId = id; 
+      this.monitorId = id;
       this.visible = true;
     },
     onLoad() {
@@ -98,9 +116,9 @@ export default {
     },
     getList() {
       this.$http
-        .get("http://118.31.113.136:8081/stock/rest/sysMonitor/pageList", {
+        .get("https://iphonekc.doudtong.com/stock/rest/sysMonitor/pageList", {
           params: {
-            userId: 1,
+            userId: this.userInfo.id,
             pageNo: this.page,
             pageSize: this.size,
           },

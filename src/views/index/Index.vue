@@ -1,8 +1,8 @@
 <template>
   <div class="page">
     <TopBar
-      title="首页"
-      :showLeft="true"
+      title=""
+      :showLeft="false"
       ref="topBar"
       :rightText="user_info.name"
       @rightClick="logout"
@@ -42,7 +42,7 @@ export default {
   created() {},
   mounted() {
     this.setListHeight();
-    this.user_info = this.$user.getUser(1);
+    this.user_info = this.$user.getUser(1); 
   },
   methods: {
     setListHeight() {

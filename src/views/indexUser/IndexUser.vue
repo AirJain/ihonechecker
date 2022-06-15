@@ -1,13 +1,13 @@
 <template>
   <div class="page">
     <TopBar
-      title="首页"
-      :showLeft="true"
+      title=""
+      :showLeft="false"
       ref="topBar"
-      rightText="用户名"
+      :rightText="userInfo.name"
       @rightClick="logout"
     />
-    <Tab /> 
+    <Tab />
   </div>
 </template>
 <script>
@@ -21,17 +21,22 @@ import { Dialog } from "vant";
 Vue.use(Toast);
 export default {
   components: {
-    TopBar, 
+    TopBar,
     Tab,
   },
   data() {
     return {
-     
       listHeight: 0,
+      userInfo: {
+        name: "",
+        userPic: "",
+      },
     };
   },
   created() {},
-  mounted() {},
+  mounted() {
+    this.userInfo = this.$user.getUser(2); 
+  },
   methods: {
     logout() {
       let that = this;

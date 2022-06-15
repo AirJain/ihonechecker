@@ -56,7 +56,7 @@ export default {
   methods: {
     onSubmit(values) {
       this.$http
-        .get("http://118.31.113.136:8081/stock/rest/sysUser/adminLogin", {
+        .get("https://iphonekc.doudtong.com/stock/rest/sysUser/adminLogin", {
           params: {
             phone: values.username,
             password: values.password,

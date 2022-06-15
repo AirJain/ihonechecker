@@ -96,16 +96,52 @@ export default {
       window.location.href =
         "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx24668b9530e5fa2b&redirect_uri=https%3A%2F%2Fiphonekc.doudtong.com%2F%23%2FuserLogin&response_type=code&scope=snsapi_userinfo&state=bf9c8eb02d401931b644c92a5f2a418c&connect_redirect=1#wechat_redirect";
     },
-    wechatBack() { 
+    wechatBack() {
       this.$http
         .get("https://iphonekc.doudtong.com/stock/rest/sysUser/accessToken", {
           params: {
             code: this.code,
           },
         })
-        .then((res) => { 
-          this.$user.setOpenId(res.data.openid);
-          this.$router.push("/userIndex");
+        .then((res) => {
+          let data = res.data.data;
+          if (res.status == 200) {
+            this.getWxUser(data);
+          }
+        });
+    },
+    //获取openid，用户头像等信息
+    getWxUser(data) {
+      this.$http
+        .get("https://iphonekc.doudtong.com/stock/rest/sysUser/wxUserInfo", {
+          params: {
+            openId: data.openid,
+            token: data.access_token,
+          },
+        })
+        .then((res) => {
+          if (res.status == 200) {
+            this.getUserData(res.data.data);
+          }
+        });
+    },
+    //获取用户id
+    getUserData(data) {
+      this.$http
+        .get("https://iphonekc.doudtong.com/stock/rest/sysUser/login", {
+          params: {
+            openId: data.openid,
+            name: data.nickname,
+            phone: "",
+            userPic: data.headimgurl,
+          },
+        })
+        .then((res) => {
+          if (res.status == 200) {
+            this.$user.setUser(res.data.data, 2);
+            Toast("登录成功");
+            this.$router.push("/userIndex");
+          }
         });
     },
     changeSelected() {

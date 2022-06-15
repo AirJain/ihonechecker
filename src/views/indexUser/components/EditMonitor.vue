@@ -118,7 +118,7 @@
 </template>
 <script>
 import Vue from "vue";
-import { Switch } from "vant";
+import { Switch, Toast } from "vant";
 import { Picker } from "vant";
 import { Popup } from "vant";
 import { Checkbox, CheckboxGroup } from "vant";
@@ -132,6 +132,7 @@ export default {
     visible: {
       type: Boolean,
       default: false,
+      userInfo: {},
     },
     monitorId: {
       type: Number,
@@ -212,6 +213,9 @@ export default {
     close() {
       this.$emit("close", "");
     },
+    refresh() {
+      this.$emit("refresh", "");
+    },
     clearSelect() {
       this.phoneColumns = [];
       this.operatorColumns = [];
@@ -262,7 +266,7 @@ export default {
     },
     onGetConfig() {
       this.$http
-        .get("http://118.31.113.136:8081/stock/rest/stock/queryConfig", {})
+        .get("https://iphonekc.doudtong.com/stock/rest/stock/queryConfig", {})
         .then((res) => {
           if (res.status == 200) {
             this.onSetConfig(res.data.data);
@@ -287,7 +291,7 @@ export default {
     },
     onGetShopList() {
       this.$http
-        .get("http://118.31.113.136:8081/stock/rest/stock/queryStores", {
+        .get("https://iphonekc.doudtong.com/stock/rest/stock/queryStores", {
           params: {
             local: this.nationValue.value,
             productName: this.phoneValue.value,
@@ -384,11 +388,11 @@ export default {
       let products = this.getProductCode(values, status);
       this.$http
         .post(
-          "http://118.31.113.136:8081/stock/rest/sysMonitor/insert",
+          "https://iphonekc.doudtong.com/stock/rest/sysMonitor/update",
           this.$qs.stringify({
             id: this.monitorId,
-            userId: 1,
-            openId: 1,
+            userId: this.userInfo.id,
+            openId: this.userInfo.openId,
             local: local,
             zipCode: values.zipCode,
             productName: productName,
@@ -397,7 +401,11 @@ export default {
             products: JSON.stringify(products),
           })
         )
-        .then((res) => {})
+        .then((res) => {
+          Toast(res.data.msg);
+          this.close();
+          this.refresh();
+        })
         .finally(() => {});
     },
     getProductCode(data, status) {

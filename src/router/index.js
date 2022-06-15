@@ -26,7 +26,7 @@ export default new Router({
       name: 'userLogin',
       components: { default: () => import('../views/login_user/LoginUser.vue') },
       meta: {
-        title: "",
+        title: "用户登录",
       },
     },
     {
@@ -34,7 +34,7 @@ export default new Router({
       name: 'userIndex',
       components: { default: () => import('../views/indexUser/IndexUser.vue') },
       meta: {
-        title: "",
+        title: "首页",
       },
     },
     
