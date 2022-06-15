@@ -16,7 +16,18 @@
         ></van-icon>
       </template>
       <template #right>
-        <slot name="right">{{ rightText }} </slot>
+        <slot name="right"
+          >{{ rightText }}
+          <van-image
+            width="25"
+            height="25"
+            fit="cover"
+            round
+            class="img"
+            :src="img"
+            v-if="img"
+          />
+        </slot>
       </template>
     </van-nav-bar>
   </div>
@@ -26,7 +37,7 @@
 export default {
   name: "TopBar",
   components: {},
-  props: ["title", "rightText", "showLeft"],
+  props: ["title", "rightText", "showLeft", "img"],
   watch: {},
   data() {
     return {};
@@ -45,6 +56,9 @@ export default {
 <style scoped lang="scss">
 .topbar {
   height: 46px;
+  .img {
+    margin-left: 5px;
+  }
   ::v-deep .van-nav-bar {
     .van-nav-bar__title {
       color: #23272a;

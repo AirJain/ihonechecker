@@ -12,7 +12,7 @@
           <div class="top">
             <div>
               {{ $helper.convertNation(item.local) }}
-              <span class="time"> 2022/6/6 13:53</span>
+              <span class="time"> {{ item.createTime }}</span>
             </div>
             <div>
               <van-switch
@@ -24,9 +24,9 @@
             </div>
           </div>
           <div class="mid">
-            <div>邮编:{{ item.zipCode }}</div>
-            <div>型号:{{ $helper.convertPhone(item.productName) }}</div>
-            <div>运营商:暂无</div>
+            <div>邮编：{{ item.zipCode }}</div>
+            <div>型号：{{ $helper.convertPhone(item.productName) }}</div>
+            <div>运营商：{{ item.version == "" ? "暂无" : item.version }}</div>
           </div>
           <div class="bottom">
             <div
@@ -34,7 +34,7 @@
               v-for="(item2, key, index2) in item.newProducts"
               :key="index2"
             >
-              <span class="type"> {{ item2[0].colorText }}: </span>
+              <span class="type"> {{ item2[0].colorText }}： </span>
               <span
                 class="memory"
                 v-for="(item3, index3) in item2"
@@ -77,7 +77,7 @@ export default {
   },
   watch: {
     active(val) {
-      if (val == true) { 
+      if (val == true) {
         this.getList();
       }
     },
@@ -141,7 +141,7 @@ export default {
         let checked = false;
         for (var j = 0; j < item.products.length; j++) {
           let item1 = item.products[j];
-          if (item.productCode)
+          if (item1.productCode)
             if (item1.stockStatus == 1) {
               checked = true;
             } else if (item1.stockStatus == 2) {
@@ -201,7 +201,6 @@ export default {
         margin-top: 10px;
         .peizhi {
           display: flex;
-          justify-content: space-between;
           margin-top: 10px;
           .type {
             width: 25%;

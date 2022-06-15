@@ -5,6 +5,7 @@
       :showLeft="false"
       ref="topBar"
       :rightText="userInfo.name"
+      :img="userInfo.userPic"
       @rightClick="logout"
     />
     <Tab />
@@ -35,7 +36,7 @@ export default {
   },
   created() {},
   mounted() {
-    this.userInfo = this.$user.getUser(2); 
+    this.userInfo = this.$user.getUser(2);
   },
   methods: {
     logout() {
@@ -44,7 +45,8 @@ export default {
         message: "您确定要退出登录吗？",
       })
         .then(() => {
-          that.$Jump("/");
+          that.$user.logout(2);
+          that.$Jump("/userLogin");
         })
         .catch(() => {
           // on cancel

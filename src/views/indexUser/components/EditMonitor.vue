@@ -48,7 +48,11 @@
             :rules="[{ required: true, message: '请填写邮编' }]"
           >
             <template #button>
-              <van-button size="small" type="info" @click="onGetShopList"
+              <van-button
+                size="small"
+                type="info"
+                native-type="button"
+                @click="onGetShopList"
                 >确定</van-button
               >
             </template>
@@ -132,8 +136,8 @@ export default {
     visible: {
       type: Boolean,
       default: false,
-      userInfo: {},
     },
+    userInfo: {},
     monitorId: {
       type: Number,
     },
@@ -296,12 +300,12 @@ export default {
             local: this.nationValue.value,
             productName: this.phoneValue.value,
             zipCode: this.emailCode,
-            version: "",
+            version: this.operatorValue.value,
           },
         })
         .then((res) => {
           if (res.status == 200) {
-            this.setPhoneModel(res.data.data);
+            this.setPhoneModel(res.data.data, this.operatorValue.value);
           }
         })
         .finally(() => {});
@@ -313,7 +317,9 @@ export default {
         if (data.props.pageProps) {
           this.phoneModes = JSON.parse(data.props.pageProps.models);
           for (var key in this.phoneModes.iPhoneModels) {
-            if (this.phoneValue.value == key) {
+            let nKey = this.operatorValue.value; 
+            nKey = nKey + this.phoneValue.value;
+            if (nKey == key) {
               tempList = this.phoneModes.iPhoneModels[key];
               this.setModel(tempList, this.phoneModes.iPhoneColors);
               break;
@@ -396,7 +402,7 @@ export default {
             local: local,
             zipCode: values.zipCode,
             productName: productName,
-            version: "",
+            version: this.operatorValue.value,
             status: status,
             products: JSON.stringify(products),
           })
