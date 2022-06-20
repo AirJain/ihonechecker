@@ -231,7 +231,7 @@ export default {
           display: flex;
           margin-top: 10px;
           .type {
-            width: 25%;
+            width: 30%;
           }
           .memory {
             width: calc(70% / 4);

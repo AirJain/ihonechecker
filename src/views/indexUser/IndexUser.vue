@@ -37,6 +37,9 @@ export default {
   created() {},
   mounted() {
     this.userInfo = this.$user.getUser(2);
+    if (this.userInfo == null) {
+      this.$router.push("/userLogin");
+    }
   },
   methods: {
     logout() {

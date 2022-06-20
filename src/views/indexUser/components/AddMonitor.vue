@@ -347,6 +347,7 @@ export default {
 <style lang="scss" scoped>
 .van-checkbox-group {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .all-center {

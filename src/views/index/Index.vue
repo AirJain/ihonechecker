@@ -4,7 +4,7 @@
       title=""
       :showLeft="false"
       ref="topBar"
-      :rightText="user_info.name"
+      :rightText="userInfo.name"
       @rightClick="logout"
     />
     <Search
@@ -35,14 +35,18 @@ export default {
     return {
       list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
       listHeight: 0,
-      user_info: { name: "" },
+      userInfo: { name: "" },
       keyword:""
     };
   },
   created() {},
   mounted() {
     this.setListHeight();
-    this.user_info = this.$user.getUser(1); 
+    this.userInfo = this.$user.getUser(1); 
+    if(this.userInfo == null){
+      this.$router.push("/login");
+    }
+
   },
   methods: {
     setListHeight() {
