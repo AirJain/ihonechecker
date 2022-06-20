@@ -12,12 +12,13 @@
             @click="showPhonePicker = true" :rules="[{ required: true, message: '请选择型号' }]" />
           <van-field readonly clickable :value="operatorValue.text" name="yys" label="选择运营商" placeholder="选择运营商"
             @click="showOperatorPicker = true" v-if="operatorColumns.length > 0" />
-          <van-field v-model="emailCode" name="zipCode" label="输入邮编" placeholder="请输入邮编"
+          <van-field v-model="emailCode" name="zipCode" label="输入邮编" placeholder="确认邮编后选择型号"
             :rules="[{ required: true, message: '请填写邮编' }]">
             <template #button>
               <van-button size="small" type="info" native-type="button" @click="onGetShopList">确定</van-button>
             </template>
           </van-field>
+          <van-field readonly clickable v-if="storeName != ''" :value="storeName" name="storeName" label="店铺名称" />
           <van-field :name="'checkboxGroup' + index" :label="item.color" v-for="(item, index) in iphoneList"
             :key="index">
             <template #input>
@@ -103,6 +104,8 @@ export default {
       iphoneList: [],
 
       editData: null,
+      stores: null,
+      storeName: ""
     };
   },
   created() { },
@@ -159,6 +162,7 @@ export default {
       this.$emit("refresh", "");
     },
     clearSelect() {
+      this.storeName = ""; 
       this.phoneColumns = [];
       this.operatorColumns = [];
       this.operatorValue = { text: "", value: "" };
@@ -243,13 +247,13 @@ export default {
         })
         .then((res) => {
           if (res.status == 200) {
-            this.setPhoneModel(res.data.data, this.operatorValue.value);
+            this.setStores(res.data.data, this.operatorValue.value);
           }
         })
         .finally(() => { });
     },
     //设置iphone的具体手机型号，内存/颜色
-    setPhoneModel(data) {
+    setPhoneModel(data, operator) {
       let tempList = [];
       if (data.props) {
         if (data.props.pageProps) {
@@ -264,6 +268,30 @@ export default {
             }
           }
         }
+      }
+    },
+    setStores(data, operator) {
+      let isFind = false;
+      if (data.props) {
+        if (data.props.pageProps) {
+          this.stores = data.props.pageProps.stores;
+          for (var key in this.stores) {
+            let item = this.stores[key];
+            if (item.address) { 
+              if (item.address.postalCode == this.emailCode) {
+                isFind = true;
+                this.storeName = item.storeName;
+              }
+            }
+          }
+        }
+      }
+      if (isFind == true) {
+        this.setPhoneModel(data, operator);
+      } else {
+        this.iphoneList = [];
+        this.storeName = "";
+        Toast("所填对应的邮编地址暂无店铺信息,请重新输入");
       }
     },
     //设置iphone的颜色

@@ -2,69 +2,24 @@
   <div class="content">
     <van-form @submit="onSubmit">
       <div class="fields">
-        <van-field
-          readonly
-          clickable
-          :value="nationValue.text"
-          name="local"
-          label="选择国家"
-          placeholder="请选择国家"
-          @click="showNationPicker = true"
-          :rules="[{ required: true, message: '请选择国家' }]"
-        />
-        <van-field
-          readonly
-          clickable
-          :value="phoneValue.text"
-          name="productName"
-          label="选择型号"
-          placeholder="请选择型号"
-          @click="showPhonePicker = true"
-          :rules="[{ required: true, message: '请选择型号' }]"
-        />
-        <van-field
-          readonly
-          clickable
-          :value="operatorValue.text"
-          name="yys"
-          label="选择运营商"
-          placeholder="选择运营商"
-          @click="showOperatorPicker = true"
-          v-if="operatorColumns.length > 0"
-        />
-        <van-field
-          v-model="emailCode"
-          name="zipCode"
-          label="输入邮编"
-          placeholder="确认邮编后选择型号"
-          :rules="[{ required: true, message: '请填写邮编' }]"
-        >
+        <van-field readonly clickable :value="nationValue.text" name="local" label="选择国家" placeholder="请选择国家"
+          @click="showNationPicker = true" :rules="[{ required: true, message: '请选择国家' }]" />
+        <van-field readonly clickable :value="phoneValue.text" name="productName" label="选择型号" placeholder="请选择型号"
+          @click="showPhonePicker = true" :rules="[{ required: true, message: '请选择型号' }]" />
+        <van-field readonly clickable :value="operatorValue.text" name="yys" label="选择运营商" placeholder="选择运营商"
+          @click="showOperatorPicker = true" v-if="operatorColumns.length > 0" />
+        <van-field v-model="emailCode" name="zipCode" label="输入邮编" placeholder="确认邮编后选择型号"
+          :rules="[{ required: true, message: '请填写邮编' }]">
           <template #button>
-            <van-button
-              size="small"
-              type="info"
-              native-type="button"
-              @click="onGetShopList"
-              >确定</van-button
-            >
+            <van-button size="small" type="info" native-type="button" @click="onGetShopList">确定</van-button>
           </template>
         </van-field>
-        <van-field
-          :name="'checkboxGroup' + index"
-          :label="item.color"
-          v-for="(item, index) in iphoneList"
-          :key="index"
-        >
+        <van-field readonly clickable v-if="storeName != ''" :value="storeName" name="storeName" label="店铺名称" />
+        <van-field :name="'checkboxGroup' + index" :label="item.color" v-for="(item, index) in iphoneList" :key="index">
           <template #input>
             <van-checkbox-group v-model="item.check">
-              <van-checkbox
-                shape="square"
-                :name="item2.originModel"
-                icon-size="15px"
-                v-for="(item2, index2) in item.models"
-                :key="index2"
-                >{{ item2.showModel }}</van-checkbox
-              >
+              <van-checkbox shape="square" :name="item2.originModel" icon-size="15px"
+                v-for="(item2, index2) in item.models" :key="index2">{{ item2.showModel }}</van-checkbox>
             </van-checkbox-group>
           </template>
         </van-field>
@@ -75,37 +30,22 @@
         </van-field>
         <!-- 国家选择 -->
         <van-popup v-model="showNationPicker" round position="bottom">
-          <van-picker
-            show-toolbar
-            :default-index="defaultNation"
-            :columns="nationColumns"
-            @cancel="showNationPicker = false"
-            @confirm="onConfirmNation"
-          />
+          <van-picker show-toolbar :default-index="defaultNation" :columns="nationColumns"
+            @cancel="showNationPicker = false" @confirm="onConfirmNation" />
         </van-popup>
         <!-- 型号选择 -->
         <van-popup v-model="showPhonePicker" round position="bottom">
-          <van-picker
-            show-toolbar
-            :columns="phoneColumns"
-            @cancel="showPhonePicker = false"
-            @confirm="onConfirmPhone"
-          />
+          <van-picker show-toolbar :columns="phoneColumns" @cancel="showPhonePicker = false"
+            @confirm="onConfirmPhone" />
         </van-popup>
         <!-- 运营商选择 -->
         <van-popup v-model="showOperatorPicker" round position="bottom">
-          <van-picker
-            show-toolbar
-            :columns="operatorColumns"
-            @cancel="showOperatorPicker = false"
-            @confirm="onConfirmOperator"
-          />
+          <van-picker show-toolbar :columns="operatorColumns" @cancel="showOperatorPicker = false"
+            @confirm="onConfirmOperator" />
         </van-popup>
       </div>
       <div class="btn-outer">
-        <van-button round block type="info" class="login" native-type="submit"
-          >保存</van-button
-        >
+        <van-button round block type="info" class="login" native-type="submit">保存</van-button>
       </div>
     </van-form>
   </div>
@@ -116,6 +56,7 @@ import { Switch, Toast } from "vant";
 import { Picker } from "vant";
 import { Popup } from "vant";
 import { Checkbox, CheckboxGroup } from "vant";
+import { timeout } from "q";
 Vue.use(Checkbox);
 Vue.use(CheckboxGroup);
 Vue.use(Popup);
@@ -142,18 +83,22 @@ export default {
       operatorColumns: [],
       result: ["a", "b"],
       iphoneList: [],
+      stores: null,
+      storeName: ""
+
     };
   },
-  created() {},
+  created() { },
   mounted() {
     this.onGetConfig();
   },
   methods: {
     clearSelect() {
+      this.storeName = "";
       this.phoneColumns = [];
       this.operatorColumns = [];
       this.operatorValue = { text: "", value: "" };
-      this.phoneValue = { text: "", value: "" };
+      this.phoneValue = { text: "", value: "" }; 
     },
     onConfirmNation(value) {
       this.nationValue = value;
@@ -205,7 +150,7 @@ export default {
             this.onSetConfig(res.data.data);
           }
         })
-        .finally(() => {});
+        .finally(() => { });
     },
     onSetConfig(data) {
       this.configs = data;
@@ -234,10 +179,10 @@ export default {
         })
         .then((res) => {
           if (res.status == 200) {
-            this.setPhoneModel(res.data.data, this.operatorValue.value);
+            this.setStores(res.data.data, this.operatorValue.value);
           }
         })
-        .finally(() => {});
+        .finally(() => { });
     },
     //设置iphone的具体手机型号，内存/颜色
     setPhoneModel(data, operator) {
@@ -246,7 +191,7 @@ export default {
         if (data.props.pageProps) {
           this.phoneModes = JSON.parse(data.props.pageProps.models);
           for (var key in this.phoneModes.iPhoneModels) {
-            let nKey = this.operatorValue.value; 
+            let nKey = this.operatorValue.value;
             nKey = nKey + this.phoneValue.value;
             if (nKey == key) {
               tempList = this.phoneModes.iPhoneModels[key];
@@ -255,6 +200,30 @@ export default {
             }
           }
         }
+      }
+    },
+    setStores(data, operator) {
+      let isFind = false;
+      if (data.props) {
+        if (data.props.pageProps) {
+          this.stores = data.props.pageProps.stores;
+          for (var key in this.stores) {
+            let item = this.stores[key];
+            if (item.address) { 
+              if (item.address.postalCode == this.emailCode) {
+                isFind = true;
+                this.storeName = item.storeName;
+              }
+            }
+          }
+        }
+      }
+      if (isFind == true) {
+        this.setPhoneModel(data, operator);
+      } else {
+        this.iphoneList = [];
+        this.storeName = "";
+        Toast("所填对应的邮编地址暂无店铺信息,请重新输入");
       }
     },
     //设置iphone的颜色
@@ -324,7 +293,7 @@ export default {
         .then((res) => {
           Toast(res.data.msg);
         })
-        .finally(() => {});
+        .finally(() => { });
     },
     getProductCode(data, status) {
       let list = [];
@@ -355,12 +324,14 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .content {
   font-size: 15px;
   overflow-y: auto;
   margin: 10px;
   border-radius: 10px;
   background: #ffffff;
+
   .peizhi {
     display: flex;
     flex-wrap: wrap;
@@ -374,8 +345,10 @@ export default {
       margin-right: 5px;
     }
   }
+
   .btn-outer {
     padding: 0 15px;
+
     .login {
       margin: 35px 0;
     }
